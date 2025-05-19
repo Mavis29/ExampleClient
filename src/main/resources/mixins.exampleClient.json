@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "verbose": true,
+  "package": "com.exampleGroup.exampleClient.mixins",
+  "refmap": "mixins.exampleClient.refmap.json",
+  "mixins": [],
+  "client": [
+    "MixinMinecraft",
+    "chat.MixinGuiChat",
+    "chat.MixinGuiScreen",
+    "chat.MixinGuiTextField",
+    "entity.MixinEntityPlayerSP"
+  ]
+}
