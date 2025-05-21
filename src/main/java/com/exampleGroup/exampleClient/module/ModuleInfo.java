@@ -1,4 +1,4 @@
-package com.exampleGroupe.exampleClient.module;
+package com.exampleGroup.exampleClient.module;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 public @interface ModuleInfo {
 
     String name();
+
+    String commandName();
 
     String description() default "";
 

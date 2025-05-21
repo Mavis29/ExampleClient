@@ -2,7 +2,7 @@ package com.exampleGroup.exampleClient;
 
 import com.exampleGroup.exampleClient.command.CommandManager;
 import com.exampleGroup.exampleClient.config.ConfigManager;
-import com.exampleGroup.exampleClient.module.modules.render.TestModule;
+import com.exampleGroup.exampleClient.module.ModuleManager;
 import com.exampleGroup.exampleClient.relations.RelationManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +21,7 @@ public class ExampleClient {
     public static final CommandManager COMMAND_MANAGER = new CommandManager();
     public static final RelationManager RELATION_MANAGER = new RelationManager();
     public static final ConfigManager CONFIG_MANAGER = new ConfigManager();
+    public static final ModuleManager MODULE_MANAGER = new ModuleManager();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -31,7 +32,7 @@ public class ExampleClient {
     public void init(FMLInitializationEvent event) {
 
         MinecraftForge.EVENT_BUS.register(COMMAND_MANAGER);
-        MinecraftForge.EVENT_BUS.register(new TestModule());
+        MinecraftForge.EVENT_BUS.register(MODULE_MANAGER);
 
     }
 
