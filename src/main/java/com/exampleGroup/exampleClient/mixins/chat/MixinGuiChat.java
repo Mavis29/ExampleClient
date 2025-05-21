@@ -1,5 +1,6 @@
 package com.exampleGroup.exampleClient.mixins.chat;
 
+import com.exampleGroup.exampleClient.command.CommandManager;
 import com.exampleGroup.exampleClient.events.chat.ChatCloseEvent;
 import com.exampleGroup.exampleClient.events.chat.ChatInitEvent;
 import com.exampleGroup.exampleClient.events.chat.ChatInputEvent;
@@ -24,6 +25,11 @@ public class MixinGuiChat extends GuiScreen {
         ChatInputEvent event = new ChatInputEvent(keyCode, this.inputField.getText());
         MinecraftForge.EVENT_BUS.post(event);
         this.inputField.setText(event.getInput());
+    }
+
+    @Inject(method = "autocompletePlayerNames", at = @At("HEAD"), cancellable = true)
+    public void autocompletePlayerNames(CallbackInfo ci) {
+        if (CommandManager.isCustomCommand()) ci.cancel();
     }
 
     @Inject(method = "onGuiClosed", at = @At("RETURN"))

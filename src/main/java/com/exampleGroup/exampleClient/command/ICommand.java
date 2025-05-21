@@ -33,7 +33,7 @@ public interface ICommand {
      * @param input the current input in the text field
      * @return get the most likely chat completion
      */
-    default String getTabCompletion(String input) {
-        return input;
+    default String[][] getTabCompletion(String input) {
+        return new String[][]{{input}};
     }
 }

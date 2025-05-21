@@ -1,8 +1,10 @@
 package com.exampleGroup.exampleClient.mixins.chat;
 
 import com.exampleGroup.exampleClient.command.CommandManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
 import org.spongepowered.asm.mixin.*;
 
@@ -84,7 +86,7 @@ public abstract class MixinGuiTextField extends Gui {
             }
 
             // Draws white box around the chat to visualise that the player will execute a custom command
-            if (CommandManager.isCustomCommand()) {
+            if (CommandManager.isCustomCommand() && Minecraft.getMinecraft().currentScreen instanceof GuiChat) {
                 exampleClient$drawChatOutline();
             }
 

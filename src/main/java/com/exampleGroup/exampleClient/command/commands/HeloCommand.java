@@ -35,9 +35,4 @@ public class HeloCommand implements ICommand {
             mc.thePlayer.addChatMessage(new ChatComponentText(ChatFormatting.RED + getCommandUsage(sender)));
         }
     }
-
-    @Override
-    public String getTabCompletion(String input) {
-        return ICommand.super.getTabCompletion(input);
-    }
 }
