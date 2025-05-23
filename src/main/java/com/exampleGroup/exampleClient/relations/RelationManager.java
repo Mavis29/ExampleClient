@@ -8,7 +8,8 @@ import static com.exampleGroup.exampleClient.logging.Logger.sendChatMessage;
 
 public class RelationManager {
 
-    private ArrayList<String> friendsList, targetList;
+    private final ArrayList<String> friendsList;
+    private final ArrayList<String> targetList;
 
     public RelationManager() {
         friendsList = new ArrayList<String>();
