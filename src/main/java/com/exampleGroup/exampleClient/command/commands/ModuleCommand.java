@@ -1,5 +1,7 @@
-package com.exampleGroup.exampleClient.command;
+package com.exampleGroup.exampleClient.command.commands;
 
+import com.exampleGroup.exampleClient.ExampleClient;
+import com.exampleGroup.exampleClient.command.ICommand;
 import com.exampleGroup.exampleClient.module.Module;
 import com.exampleGroup.exampleClient.setting.Setting;
 import com.exampleGroup.exampleClient.setting.settings.ListSetting;
@@ -48,17 +50,16 @@ public class ModuleCommand implements ICommand {
             if (!setting.getName().equals(args[1])) continue;
             if (setting instanceof ToggleSetting) {
                 handleToggle((ToggleSetting) setting, args.length < 3 ? "" : args[2]);
-                return;
             } else if (setting instanceof SliderSetting && args.length > 2) {
                 handleSlider((SliderSetting) setting, args[2]);
-                return;
             } else if (setting instanceof ListSetting && args.length > 2) {
                 handleList((ListSetting) setting, args[2]);
-                return;
             } else {
                 sendChatMessage(getCommandUsage(sender));
                 return;
             }
+            ExampleClient.CONFIG_MANAGER.update();
+            return;
         }
 
         if (args.length < 3) {
@@ -89,6 +90,7 @@ public class ModuleCommand implements ICommand {
     }
 
     private void bind(String key) {
+        key = key.toUpperCase();
         int index = Keyboard.getKeyIndex(key);
         sendChatMessage("" + index);
         if (index == 0) {

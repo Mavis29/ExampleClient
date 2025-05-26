@@ -42,6 +42,9 @@ public class CommandManager {
 
         // Config
         registerCommand(new ConfigCommand());
+
+        // Click gui
+        registerCommand(new ClickGuiCommand());
     }
 
     public void registerCommand(ICommand command) {
@@ -69,7 +72,6 @@ public class CommandManager {
         }
         if (event.getKeyCode() == 15) { // tab
             if (tabCounter == 0) lastPreTabInput = input;
-            System.out.println("Tab, lastPreTabInput: " + lastPreTabInput);
             event.setInput(getTabCompletion(lastPreTabInput, tabCounter));
             tabCounter++;
         } else {
@@ -90,16 +92,12 @@ public class CommandManager {
     public String getTabCompletion(String input, int option) {
         String cleanedInput = input.replaceFirst(prefix, ""); // turns .test into test
         if (!cleanedInput.contains(" ")) {
-            System.out.println("main command");
             ArrayList<String> commandNames = new ArrayList<>(commands.keySet()); // makes a list with all command names
-            System.out.println(Arrays.toString(commandNames.toArray()));
             List<String> possibleValues = commandNames.stream().filter(s -> s.toLowerCase().startsWith(cleanedInput.toLowerCase())).collect(Collectors.toList()); // filters it to only include ones that make sense
-            System.out.println(Arrays.toString(possibleValues.toArray()));
             if (possibleValues.isEmpty()) return input;
             return prefix + possibleValues.get(option % possibleValues.size());
         }
 
-        System.out.println("sub commands");
         String[] split = cleanedInput.split(" ");
         String[] args;
         if (cleanedInput.charAt(cleanedInput.length() - 1) == ' ') {
@@ -113,12 +111,11 @@ public class CommandManager {
         ICommand command = commands.get(args[0]);
         if (command == null) return input;
 
-        System.out.println("here");
-
         String[][] chatCompletion = command.getTabCompletion(input);
-        String possibleValuesStr = "{";
+
+        //String possibleValuesStr = "{";
         if (args.length > chatCompletion.length + 1) return input;
-        for (int i = 0; i < chatCompletion.length; i++) {
+        /*for (int i = 0; i < chatCompletion.length; i++) {
             possibleValuesStr += "{";
             for (int j = 0; j < chatCompletion[i].length; j++) {
                 if (j != 0) possibleValuesStr += ", ";
@@ -126,13 +123,13 @@ public class CommandManager {
             }
             possibleValuesStr += "}";
         }
-        possibleValuesStr += "}";
-        System.out.println(possibleValuesStr);
-
-        System.out.println("Starts with: " + args[args.length - 1]);
-        System.out.println("chat comp:" + Arrays.toString(chatCompletion[args.length - 2]));
+        possibleValuesStr += "}";*/
+        //System.out.println(possibleValuesStr);
+        // TODO: remove comments
+        //System.out.println("Starts with: " + args[args.length - 1]);
+        //System.out.println("chat comp:" + Arrays.toString(chatCompletion[args.length - 2]));
         List<String> possibleValues = Arrays.stream(chatCompletion[args.length - 2]).filter(s -> s.toLowerCase().startsWith(args[args.length - 1].toLowerCase())).collect(Collectors.toList());
-        System.out.println(Arrays.toString(possibleValues.toArray()));
+        //System.out.println(Arrays.toString(possibleValues.toArray()));
 
         if (possibleValues.isEmpty()) return input;
 

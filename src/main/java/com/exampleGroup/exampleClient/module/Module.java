@@ -1,12 +1,19 @@
 package com.exampleGroup.exampleClient.module;
 
+import com.exampleGroup.exampleClient.logging.Logger;
 import com.exampleGroup.exampleClient.setting.Setting;
+import com.exampleGroup.exampleClient.setting.settings.ListSetting;
+import com.exampleGroup.exampleClient.setting.settings.SliderSetting;
+import com.exampleGroup.exampleClient.setting.settings.ToggleSetting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
+
+import static com.exampleGroup.exampleClient.ExampleClient.CONFIG_MANAGER;
+import static com.exampleGroup.exampleClient.ExampleClient.MODULE_MANAGER;
 
 public abstract class Module {
 
@@ -42,6 +49,19 @@ public abstract class Module {
         mc.thePlayer.addChatMessage(new ChatComponentText(name + " disabled!"));
     }
 
+    public void onConfigUpdate() {
+        for (Setting setting : settings) {
+            if (setting instanceof ToggleSetting) {
+                ((ToggleSetting) setting).setEnabled(CONFIG_MANAGER.getValue(this, setting));
+            } else if (setting instanceof SliderSetting) {
+                ((SliderSetting) setting).setCurrent(CONFIG_MANAGER.getValue(this, setting));
+            } else if (setting instanceof ListSetting) {
+                ((ListSetting) setting).setCurrent(CONFIG_MANAGER.getValue(this, setting));
+            }
+            Logger.sendChatMessage("Updated setting: " + setting.getName() + " in module: " + this.getName());
+        }
+    }
+
     public void setEnabled(boolean enabled) {
         if (this.enabled == enabled) return;
         if (lastToggled + 100 > System.currentTimeMillis()) return;
@@ -54,6 +74,8 @@ public abstract class Module {
             MinecraftForge.EVENT_BUS.unregister(this);
             onDisable();
         }
+        MODULE_MANAGER.setModuleEnabled(this, enabled);
+        CONFIG_MANAGER.setModuleEnabled(this, enabled);
     }
 
     public void registerSetting(Setting setting) {

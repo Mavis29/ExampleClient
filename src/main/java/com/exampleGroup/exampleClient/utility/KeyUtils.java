@@ -63,7 +63,6 @@ public class KeyUtils {
     }
 
     public static int getIndexFromKeyName(String keyName) {
-        registerKeys();
         try {
             return customKeyMappings.get(keyName);
         } catch (NullPointerException e) {

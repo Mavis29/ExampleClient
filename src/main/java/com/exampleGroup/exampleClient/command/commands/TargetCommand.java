@@ -45,16 +45,10 @@ public class TargetCommand implements ICommand {
         }
 
         if (args.length == 3) {
-            if (args[1].equals("add"))
-                addPlayer(args[2]);
-            else if (args[1].equals("remove"))
-                removePlayer(args[2]);
-            else {
-                mc.thePlayer.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
-            }
-        } else {
-            mc.thePlayer.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
-        }
+            if (args[1].equals("add")) addPlayer(args[2]);
+            else if (args[1].equals("remove")) removePlayer(args[2]);
+            else mc.thePlayer.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
+        } else mc.thePlayer.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
     }
 
     @Override
