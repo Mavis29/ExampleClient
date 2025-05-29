@@ -10,6 +10,7 @@ import com.exampleGroup.exampleClient.setting.settings.ToggleSetting;
 import com.exampleGroup.exampleClient.utility.KeyUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.EnumChatFormatting;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ModuleCommand implements ICommand {
     @Override
     public void processCommand(EntityPlayerSP sender, String[] args) {
         if (args.length < 2) {
-            sendChatMessage(getCommandUsage(sender));
+            printOverview();
             return;
         }
 
@@ -133,5 +134,27 @@ public class ModuleCommand implements ICommand {
             return;
         }
         sendChatMessage(EnumChatFormatting.RED + "The argument passed wasn't valid.");
+    }
+
+    private void printOverview() {
+
+        String overview = "§l§a" + module.getName() + ": \n§r";
+
+        for (Setting setting : module.getSettings()) {
+            overview += " §8- §r" + setting.getName() + " ";
+            if (setting instanceof ToggleSetting) {
+                overview += "§7§o" + ((ToggleSetting) setting).isEnabled();
+            } else if (setting instanceof SliderSetting) {
+                overview += "§7§o" + ((SliderSetting) setting).getCurrent();
+            } else if (setting instanceof ListSetting) {
+                overview += "§7§o" + ((ListSetting) setting).getCurrent();
+            }
+            overview += "\n§r";
+        }
+
+        overview = StringUtils.chop(overview);
+        overview = StringUtils.chop(overview);
+        overview = StringUtils.chop(overview);
+        sendChatMessage(overview);
     }
 }
