@@ -25,7 +25,7 @@ public abstract class Module {
     private final boolean moveable;
     private int key;
     private boolean enabled = false;
-    private int hudX, hudY;
+    private SliderSetting posX, posY;
     private long lastToggled;
 
     public Module() {
@@ -120,11 +120,10 @@ public abstract class Module {
     }
 
     public void setHudPos(int hudX, int hudY) {
-        this.hudX = hudX;
-        this.hudY = hudY;
+
     }
 
     public int[] getHudPos() {
-        return new int[]{hudX, hudY};
+        return new int[]{0, 0};
     }
 }

@@ -37,7 +37,6 @@ public class Hud extends Module {
         registerSetting(backgroundOpacity = new SliderSetting("opacity", 0, 1, 0.4));
         registerSetting(posX = new SliderSetting("posX", 0, 4096, 2));
         registerSetting(posY = new SliderSetting("posY", 0, 4096, 2));
-
     }
 
     @SubscribeEvent
@@ -45,6 +44,17 @@ public class Hud extends Module {
         FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
         if (orientation.getCurrent().equals("Left")) renderLeft(fr);
         else if (orientation.getCurrent().equals("Right")) renderRight(fr);
+    }
+
+    @Override
+    public void setHudPos(int hudX, int hudY) {
+        posX.setCurrent(hudX);
+        posY.setCurrent(hudY);
+    }
+
+    @Override
+    public int[] getHudPos() {
+        return new int[]{(int) posX.getCurrent(), (int) posY.getCurrent()};
     }
 
     private void renderLeft(FontRenderer fr) {

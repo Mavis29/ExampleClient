@@ -1,6 +1,7 @@
 package com.exampleGroup.exampleClient;
 
 import com.exampleGroup.exampleClient.clickGui.ClickGui;
+import com.exampleGroup.exampleClient.clickGui.HudGui;
 import com.exampleGroup.exampleClient.command.CommandManager;
 import com.exampleGroup.exampleClient.config.ConfigManager;
 import com.exampleGroup.exampleClient.module.ModuleManager;
@@ -26,6 +27,7 @@ public class ExampleClient {
     public static final ModuleManager MODULE_MANAGER = new ModuleManager();
     public static final ConfigManager CONFIG_MANAGER = new ConfigManager();
     public static final ClickGui CLICK_GUI = new ClickGui();
+    public static final HudGui HUD_GUI = new HudGui();
 
     // Utility
     KeyUtils keyUtils = new KeyUtils();

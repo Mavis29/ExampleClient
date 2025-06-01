@@ -57,6 +57,9 @@ public class ModuleManager {
         if (key == ExampleClient.CLICK_GUI.getKey()) {
             mc.displayGuiScreen(ExampleClient.CLICK_GUI);
             return;
+        } else if (key == Keyboard.KEY_M) {
+            mc.displayGuiScreen(ExampleClient.HUD_GUI);
+            return;
         }
         for (Module module : modules.keySet()) {
             if (module.getKey() != key) return;
