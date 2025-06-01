@@ -58,13 +58,14 @@ public abstract class Module {
             } else if (setting instanceof ListSetting) {
                 ((ListSetting) setting).setCurrent(CONFIG_MANAGER.getValue(this, setting));
             }
+            if (mc.thePlayer == null || mc.theWorld == null) return;
             Logger.sendChatMessage("Updated setting: " + setting.getName() + " in module: " + this.getName());
         }
     }
 
     public void setEnabled(boolean enabled) {
         if (this.enabled == enabled) return;
-        if (lastToggled + 100 > System.currentTimeMillis()) return;
+        if (lastToggled + 170 > System.currentTimeMillis()) return;
         this.enabled = enabled;
         lastToggled = System.currentTimeMillis();
         if (enabled) {

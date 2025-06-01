@@ -2,8 +2,10 @@ package com.exampleGroup.exampleClient.module;
 
 import com.exampleGroup.exampleClient.ExampleClient;
 import com.exampleGroup.exampleClient.command.commands.ModuleCommand;
+import com.exampleGroup.exampleClient.module.modules.render.Hud;
 import com.exampleGroup.exampleClient.module.modules.render.TestModule;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
@@ -23,6 +25,7 @@ public class ModuleManager {
 
     public void registerModules() {
         register(new TestModule(), false);
+        register(new Hud(), false);
     }
 
     public void register(Module module, boolean enabled) {
@@ -43,6 +46,12 @@ public class ModuleManager {
     }
 
     @SubscribeEvent
+    public void onWorldJoin(EntityJoinWorldEvent event) {
+        if (event.entity != mc.thePlayer) return;
+        onConfigUpdate();
+    }
+
+    @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         int key = Keyboard.getEventKey();
         if (key == ExampleClient.CLICK_GUI.getKey()) {
@@ -58,7 +67,7 @@ public class ModuleManager {
     @SubscribeEvent
     public void onMouseInput(InputEvent.MouseInputEvent event) {
         int button = Mouse.getEventButton();
-        if (button == -1) return;
+        if (button == -1 || button == 0) return;
         if (button == ExampleClient.CLICK_GUI.getKey()) {
             mc.displayGuiScreen(ExampleClient.CLICK_GUI);
             return;
@@ -73,6 +82,7 @@ public class ModuleManager {
         for (Module module : modules.keySet()) {
             boolean enabled = ExampleClient.CONFIG_MANAGER.isEnabled(module);
             module.setEnabled(enabled);
+            module.onConfigUpdate();
         }
     }
 }

@@ -29,7 +29,6 @@ public class ConfigManager {
         } catch (Exception e) {
             loadConfig("default.cfg");
         }
-
     }
 
     public void createConfig(String fileName) throws Exception {
